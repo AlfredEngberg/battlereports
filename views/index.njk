@@ -1,0 +1,33 @@
+{% extends "layout.njk" %}
+{% block content %}
+<main class="container">
+  <hero>
+    <h1>Welome to the most amazing adventure</h1>
+    <img src="/img/cover.jpg" alt="Cover image">
+  </hero>
+  <p>This webbpage will take you on an amazing adventure!</p>
+  <p>Please insert Post code so the player can enter theire name!</p>
+  <p>
+    In the shadow-laden realms where darkness holds dominion and eerie whispers dance through the air like malevolent
+    spirits, a tale unfolds, shrouded in the mystique of the forbidden. In a land where the moon rarely dares to cast
+    its silvery gaze, and the stars above seem to conspire in celestial conspiracy, an ancient evil stirs, awakening
+    from its slumber in the abyss.
+
+    A once-thriving kingdom, now draped in the tattered remnants of its former glory, stands on the precipice of doom.
+    The skies weep an endless cascade of ink-black tears, foretelling the impending arrival of a maleficent force that
+    hungers for the very essence of life. In this desolate expanse, where hope flickers like a dying ember, a chosen few
+    rise against the encroaching shadows.
+
+    Amidst the ruins of shattered castles and the twisted boughs of gnarled trees, a reluctant hero emerges—a figure
+    draped in the cloak of destiny, burdened by a legacy written in blood. With a sword that gleams with an otherworldly
+    light and eyes that betray a glimpse into the abyss, they embark on a peril</p>
+
+    <form action="/username" method="post">
+      <label for="username">Enter your name</label>
+      <input type="text" id="username" name="username" placeholder="">
+      <input type="submit" value="submit">
+    </form>
+
+  <p><a href="/story/0" class="button">Please click here to begin.</a></p>
+</main>
+{% endblock %}
