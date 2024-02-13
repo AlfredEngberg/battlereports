@@ -1,0 +1,8 @@
+
+<ul>
+{%for report in battlereports%}
+    <li><a href="/battlereports/{{ report.id }}">{{ report.title }}</a></li>
+{%endfor%}
+</ul>
+
+{{ battlereports[0].text }}
