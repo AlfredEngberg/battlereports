@@ -1,8 +1,12 @@
+{% extends "layout.njk" %}
 
+{% block content %}
 <ul>
-{%for report in battlereports%}
-    <li><a href="/battlereports/{{ report.id }}">{{ report.title }}</a></li>
-{%endfor%}
+    {%for report in battlereports%}
+    <li class="nav-item"><a href="/battlereports/{{ report.id }}" class="button">{{ report.title }}</a></li>
+    {%endfor%}
 </ul>
-
-{{ battlereports[0].text }}
+        <pre>
+    {{ battlereports[0].text }}
+</pre>
+{% endblock %}
