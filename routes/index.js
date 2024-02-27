@@ -39,7 +39,7 @@ router.get('/battlereports', async function (req, res) {
   // })
 
   // res.json({battlereports})
-  res.render("test.njk", { battlereports} )
+  res.render("test.njk", { battlereports })
 })
 
 router.get('/battlereports/:id', async function (req, res) {
@@ -60,26 +60,49 @@ router.get('/battlereports/:id', async function (req, res) {
   // })
 
   // res.json({battlereports})
-  res.render("test.njk", { battlereports} )
+  res.render("test.njk", { battlereports })
 })
 
-router.get('/newplayer', function (req, res){
+router.get('/newplayer', function (req, res) {
   res.render('newplayer.njk', { title: 'Ny spelare' })
 })
 
 router.post('/newplayer', async function (req, res) {
   console.log(req.body)
   // plocka ut värden vi ska ha
-  const player = req.body.player
-  const description = req.body.description
-  console.log(breed, description)
+  const namn = req.body.namn
+  const armylist = req.body.armylist
+  console.log(namn, armylist)
+  const [result] = await pool.promise().query('INSERT INTO alfred_spelare (namn, armylist) VALUES (?, ?)', [namn, armylist])
   // säkerhet vad har vi för data
   // nästa steg är att skriva in i databasen
   // tableplus för att lära oss SQL fråga
-  // INSERT INTO `alfred_spelare` (`namn1`, `armylist1`, `namn2`, `armylist2`) VALUES
+  // INSERT INTO `alfred_spelare` (`namn`, `armylist`, `namn2`, `armylist2`) VALUES
   // await.pool.promise().query()
-('buffelfisk', 'typ 1 space marine', 'Emrik', '100000 guardsmen');
+  // ('buffelfisk', 'typ 1 space marine', 'Emrik', '100000 guardsmen');
+
+  // const title = req.body.title
+  // const spel = req.body.spel
+  // const spelare_id = req.body.spelare_id
+  // const image = req.body.image
+  // const text = req.body.text
+  // const vinnare = req.body.vinnare
+  // console.log(title, spel, spelare_id, image, text, vinnare)
+  // const [result] = await pool.promise().query('INSERT INTO alfred_battlereports (title, spel, spelare_id, image, text, vinnare) VALUES (?, ?, ?, ?, ?, ?)', [title, spel, spelare_id, image, text, vinnare])
   res.json(req.body)
 })
 
+router.get('/spelare', async function (req, res) {
+  const [spelare] = await pool.promise().query("SELECT * FROM alfred_spelare")
+  console.log(spelare)
+  // const part = battlereports.spelare.find((spelare) => spelare.id === 0)
+  // res.render('part.njk', {
+  //   username: req.session.username,
+  //   title: part.name,
+  //   part: part,
+  // })
+
+  // res.json({battlereports})
+  res.render("spelare.njk", { spelare })
+})
 module.exports = router

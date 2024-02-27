@@ -1,0 +1,11 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<main class="wrapper">
+    <h1>{{ title }}</h1>
+    <ul>
+        {% for spelare in spelare %}
+        <li>{{ spelare.namn }}, {{ spelare.armylist }}</li>
+        {% endfor %}
+</main>
+{% endblock %}
