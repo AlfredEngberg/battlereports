@@ -4,8 +4,8 @@
 <main class="wrapper">
     <h1>{{ title }}</h1>
     <ul>
-        {% for spelare in spelare %}
-        <li>{{ spelare.namn }}, {{ spelare.armylist }}</li>
+        {% for item in spelare %}
+        <li><a href="/profile/{{item.id}}">{{ item.namn }}</a></li>
         {% endfor %}
 </main>
 {% endblock %}

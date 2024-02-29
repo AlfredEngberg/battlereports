@@ -24,6 +24,7 @@ img {
   text-align: center;
   text-decoration: none;
   display: inline-block;
+  border: 0.5rem outset rgb(0, 0, 0);
 }
 
 .button:hover, .button:active {
