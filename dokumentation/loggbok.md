@@ -1,0 +1,3 @@
+06-09 2024
+Idag så skrev jag färdigt planeringen och jag lade till allt i database.
+Jag hade lite problem med designen av databasen och dess upplägg. Men med Jens hjälp så fixades det utan några större problem. Jens hjälpte mig med hur jag bör tänka kring designen och gav förslag på att ändra en tabell från stats till game. Innan idag så hade jag problem med hur kopplingen mellan användare och listor skulle vara. Med det jag hade tidigare så kunde en användare max ha 1 lista, då man ägde bara 1 lista. Med det nya sättet så har listorna en ägare, vilket innebär att man kan ha hur många listor som helst.
