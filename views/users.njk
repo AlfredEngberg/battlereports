@@ -5,7 +5,7 @@
     <h1>{{ title }}</h1>
     <ul>
         {% for item in spelare %}
-        <li><a href="/profile/{{item.id}}">{{ item.namn }}</a></li>
+        <li><a href="/user/{{item.id}}">{{ item.namn }}</a></li>
         {% endfor %}
 </main>
 {% endblock %}

@@ -1,6 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
+const bcrypt = require('bcrypt')
+
+
 const pool = require('../db')
 const { render } = require('nunjucks')
 
@@ -25,90 +28,30 @@ router.get('/dbtest', async function (req, res) {
   }
 })
 
-
-router.get('/battlereports', async function (req, res) {
-
-  const [battlereports] = await pool.promise().query("SELECT * FROM alfred_battlereports JOIN alfred_spelare ON alfred_battlereports.spelare_id = alfred_spelare.id")
-  console.log(battlereports)
-  // const part = battlereports.spelare.find((spelare) => spelare.id === 0)
-  // res.render('part.njk', {
-  //   username: req.session.username,
-  //   title: part.name,
-  //   part: part,
-  // })
-
-  // res.json({battlereports})
-  res.render("test.njk", { battlereports })
+router.get('/newuser', function (req, res) {
+  res.render('newuser.njk', { title: 'Ny spelare' })
 })
 
-router.get('/battlereports/:id', async function (req, res) {
-
-  console.log(req.params.id)
-
-  const [battlereports] = await pool.promise().query(`
-    SELECT * FROM alfred_battlereports 
-    JOIN alfred_spelare 
-      ON alfred_spelare.id = alfred_spelare.id 
-    WHERE alfred_battlereports.id = ${req.params.id}`)
-  console.log(battlereports)
-  // const part = battlereports.spelare.find((spelare) => spelare.id === 0)
-  // res.render('part.njk', {
-  //   username: req.session.username,
-  //   title: part.name,
-  //   part: part,
-  // })
-
-  // res.json({battlereports})
-  res.render("test.njk", { battlereports })
-})
-
-router.get('/newplayer', function (req, res) {
-  res.render('newplayer.njk', { title: 'Ny spelare' })
-})
-
-router.post('/newplayer', async function (req, res) {
+router.post('/newuser', async function (req, res) {
   console.log(req.body)
   // plocka ut värden vi ska ha
   const namn = req.body.namn
   const armylist = req.body.armylist
   console.log(namn, armylist)
   const [result] = await pool.promise().query('INSERT INTO alfred_spelare (namn, armylist) VALUES (?, ?)', [namn, armylist])
-  // säkerhet vad har vi för data
-  // nästa steg är att skriva in i databasen
-  // tableplus för att lära oss SQL fråga
-  // INSERT INTO `alfred_spelare` (`namn`, `armylist`, `namn2`, `armylist2`) VALUES
-  // await.pool.promise().query()
-  // ('buffelfisk', 'typ 1 space marine', 'Emrik', '100000 guardsmen');
-
-  // const title = req.body.title
-  // const spel = req.body.spel
-  // const spelare_id = req.body.spelare_id
-  // const image = req.body.image
-  // const text = req.body.text
-  // const vinnare = req.body.vinnare
-  // console.log(title, spel, spelare_id, image, text, vinnare)
-  // const [result] = await pool.promise().query('INSERT INTO alfred_battlereports (title, spel, spelare_id, image, text, vinnare) VALUES (?, ?, ?, ?, ?, ?)', [title, spel, spelare_id, image, text, vinnare])
   res.json(req.body)
 })
 
 router.get('/spelare', async function (req, res) {
   const [spelare] = await pool.promise().query("SELECT * FROM alfred_spelare")
   console.log(spelare)
-  // const part = battlereports.spelare.find((spelare) => spelare.id === 0)
-  // res.render('part.njk', {
-  //   username: req.session.username,
-  //   title: part.name,
-  //   part: part,
-  // })
-
-  // res.json({battlereports})
   res.render("spelare.njk", { spelare })
 })
 
 router.get('/profile/:id', async function (req, res) {
-console.log(req.params.id)
+  console.log(req.params.id)
 
- const player_id = req.params.id
+  const player_id = req.params.id
   try {
     const [playerWithList] = await pool.promise().query(
       `SELECT alfred_spelare.*, alfred_lists.namn as listnamn, alfred_lists.list as player_list
@@ -126,6 +69,45 @@ console.log(req.params.id)
   } catch (error) {
     console.log(error)
     res.sendStatus(500)
-  } 
+  }
 })
+
+router.get('/login', function (req, res) {
+  res.render('login.njk')
+})
+
+router.post('/login', async function (req, res) {
+  const userFromForm = req.body.username
+  const passwordFromForm = req.body.password
+
+  const [user] = await pool.promise().query('SELECT * FROM patch_login Where username = ?', [userFromForm])
+  console.log(user)
+
+  bcrypt.compare(passwordFromForm, user[0].password, function (err, result) {
+    if (result == true) {
+      console.log(result, 'inloggad')
+      req.session.loggedin = true
+      req.session.username = user[0].username
+
+      console.log(req.session.loggedin)
+      res.redirect('/secret')
+      // res.redirect
+    } else {
+      console.log(result, 'inte inloggad >:(')
+      res.redirect('/login')
+    }
+  });
+})
+
+router.get('/secret', function (req, res) {
+
+  console.log(req.session.username)
+
+  if (!req.session.username) {
+    console.log("inte inloggad, stick")
+    return res.redirect('/login')
+  }
+  res.render('secret.njk', { username: req.session.username })
+})
+
 module.exports = router

@@ -2,14 +2,14 @@
 Jag ska göra en sida där man kan logga in och sen ladda upp listor på. Man ska kunna ladda upp egna listor som andra sen kan få se och varje lista ska visa antal wins och losses den listan har.
 
 # V.15
-Planeringen ska vara färdig och skapandet av databasen ska ske.-.
+Planeringen ska vara färdig och skapandet av databasen ska ske.
 
 # V.16
-Databasen med tabeller med stats - Profile som äger Lists som äger stats.
+Databasen med tabeller.
 
-Profile har id, namn, password och epost.
-Lists har id, spel (med edition), pointsValue, composition och user_id.
-Games har id, list1, list2, winner
+User har id, namn, password och epost.
+List har id, spel (med edition), pointsValue, composition och user_id.
+Game har id, list1, list2, winner
 
 # V.17
 Iplementera inloggning
