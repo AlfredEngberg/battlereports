@@ -1,10 +1,9 @@
 const express = require('express')
 const router = express.Router()
-
 const bcrypt = require('bcrypt')
-
-
 const pool = require('../db')
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
 const { render } = require('nunjucks')
 
 router.get('/', function (req, res) {
@@ -12,40 +11,29 @@ router.get('/', function (req, res) {
 
 })
 
-router.get('/dbtest', async function (req, res) {
-  try {
-    const [battlereportWithPlayer] = await pool.promise().query(
-      `SELECT * FROM alfred_battlereports JOIN alfred_spelare ON alfred_spelare.id = alfred_spelare.id`
-    );
-    console.log(battlereportWithPlayer)
-    return res.render('battlereport.njk', {
-      title: 'Battlereports',
-      battlereportWithPlayer: battlereportWithPlayer
-    })
-  } catch (error) {
-    console.log(error)
-    res.sendStatus(500)
-  }
-})
-
 router.get('/newuser', function (req, res) {
-  res.render('newuser.njk', { title: 'Ny spelare' })
+  res.render('newuser.njk', { title: 'Ny användare' })
 })
 
 router.post('/newuser', async function (req, res) {
   console.log(req.body)
   // plocka ut värden vi ska ha
-  const namn = req.body.namn
-  const armylist = req.body.armylist
-  console.log(namn, armylist)
-  const [result] = await pool.promise().query('INSERT INTO alfred_spelare (namn, armylist) VALUES (?, ?)', [namn, armylist])
-  res.json(req.body)
-})
+  const username = req.body.username
+  const email = req.body.email
+  const password = req.body.password
 
-router.get('/spelare', async function (req, res) {
-  const [spelare] = await pool.promise().query("SELECT * FROM alfred_spelare")
-  console.log(spelare)
-  res.render("spelare.njk", { spelare })
+  console.log(username, email, password)
+
+  bcrypt.hash(password, 10, async function (err, hash) {
+
+    try {
+      const [result] = await pool.promise().query('INSERT INTO alfred_user (username, email, password) VALUES (?, ?, ?)', [username, email, hash])
+      res.redirect('/login')
+    } catch (error) {
+      console.log(error)
+    }
+    res.json(req.body)
+  })
 })
 
 router.get('/profile/:id', async function (req, res) {
@@ -79,8 +67,11 @@ router.get('/login', function (req, res) {
 router.post('/login', async function (req, res) {
   const userFromForm = req.body.username
   const passwordFromForm = req.body.password
+  const emailFromForm = req.body.email
 
-  const [user] = await pool.promise().query('SELECT * FROM patch_login Where username = ?', [userFromForm])
+  const [user] = await pool.promise().query(
+    'SELECT * FROM alfred_user WHERE username = ?', [userFromForm]
+  )
   console.log(user)
 
   bcrypt.compare(passwordFromForm, user[0].password, function (err, result) {
@@ -108,6 +99,25 @@ router.get('/secret', function (req, res) {
     return res.redirect('/login')
   }
   res.render('secret.njk', { username: req.session.username })
+})
+
+router.get('/hash', async function (req, res) {
+
+  bcrypt.hash("roblox", 10, function (err, hash) {
+
+    console.log(hash);
+    return res.json(hash);
+  });
+})
+
+router.get('/users', function (req, res) {
+  res.render('users.njk', { title: 'Welcome' })
+})
+
+router.get('/dbtest', async function (req, res) {
+  const pool = require('../db')
+  const [data] = await pool.promise().query('SELECT * FROM alfred_user')
+  res.json({ data })
 })
 
 module.exports = router

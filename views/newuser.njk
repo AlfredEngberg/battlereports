@@ -2,10 +2,10 @@
 
 {% block content %}
 <h1>Lägg till ny spelare</h1>
-<h2>Spelare och dess armylist</h2>
-<form method="post" action="/newplayer">
-    <label for="name">name</label>
-    <input type="text" name="name" id="name" required>
+<h2>Namn, Epost och lösenord</h2>
+<form method="post" action="/newuser">
+    <label for="username">username</label>
+    <input type="text" name="username" id="username" required>
 
     <label for="armylist">email</label>
     <input type="text" name="email" id="email" required>

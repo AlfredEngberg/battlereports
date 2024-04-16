@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const nunjucks = require('nunjucks')
 const bodyParser = require('body-parser')
+const session = require('express-session')
 
 const indexRouter = require('./routes/index')
 
@@ -22,6 +23,15 @@ app.use((req, res, next) => {
   res.locals.url = req.originalUrl
   next()
 })
+
+app.use(
+  session({
+    secret: 'wekiugfkbnvway43',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { sameSite: true },
+  })
+)
 
 app.use('/', indexRouter)
 

@@ -4,3 +4,6 @@ Jag hade lite problem med designen av databasen och dess upplägg. Men med Jens 
 
 # 11-04 2024
 Idag så har jag jobbat med att fixa inloggning och att städa och döpa om allt så jag inte blandar engelska och svenska, syftet med det är att göra det mindre rörigt och att jag ska förstå vad som . Jag har haft ett fokus på hash men det har inte gått så bra. Jag har inte kommit så långt i inloggningen men jag har instalerat bcrypt och ska fortsätta med inloggningen nästa lektion.
+
+# 16-04 2024
+Idag så lade jag in session i projektet och fixade inloggningen. Det var otroligt mycket trubbel med det. Jag hade skrivit fel på "newuser" ett flertal gånger, jag hade också problem med sql frågan, jag hade problem med att förstå hur det fungerade. Men nu vet jag vad jag har gjort och det fungerar som det ska och man kan skapa en ny användare och logga in.
