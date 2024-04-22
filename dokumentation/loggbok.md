@@ -7,3 +7,6 @@ Idag så har jag jobbat med att fixa inloggning och att städa och döpa om allt
 
 # 16-04 2024
 Idag så lade jag in session i projektet och fixade inloggningen. Det var otroligt mycket trubbel med det. Jag hade skrivit fel på "newuser" ett flertal gånger, jag hade också problem med sql frågan, jag hade problem med att förstå hur det fungerade. Men nu vet jag vad jag har gjort och det fungerar som det ska och man kan skapa en ny användare och logga in.
+
+# 22-04 2024
+Idag så fixade jag så att man kan skapa en ny användare och när man skapar en ny användare så tas man till login sidan. Sen när man är inloggad så ser man en ny knapp som man kan skapa listor på. Jag har skapat ett formulär där som man ska använda för att skapa en ny lista. Det största problemet med detta är att välja vilket spel som man ska använda, först tänkte jag en dropdown meny men det verkade ganska svårt och jag fick inte till det så jag kollade på andra alternativ och kom fram till att checkbox skulle fungera lika bra och vara lättare så det ska bli det. Nästa lektion 

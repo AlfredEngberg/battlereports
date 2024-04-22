@@ -4,10 +4,11 @@ const bcrypt = require('bcrypt')
 const pool = require('../db')
 const saltRounds = 10;
 const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const { render } = require('nunjucks')
+const { render } = require('nunjucks');
+const session = require('express-session');
 
 router.get('/', function (req, res) {
-  res.render('index.njk', { title: 'Welcome!' })
+  res.render('index.njk', { title: 'Welcome!', loggedin: req.session.loggedin })
 
 })
 
@@ -27,8 +28,8 @@ router.post('/newuser', async function (req, res) {
   bcrypt.hash(password, 10, async function (err, hash) {
 
     try {
-      const [result] = await pool.promise().query('INSERT INTO alfred_user (username, email, password) VALUES (?, ?, ?)', [username, email, hash])
-      res.redirect('/login')
+      const [result] = await pool.promise().query('INSERT INTO alfred_user (username, password) VALUES (?, ?)', [username, hash])
+      return res.redirect('/login')
     } catch (error) {
       console.log(error)
     }
@@ -85,7 +86,7 @@ router.post('/login', async function (req, res) {
       // res.redirect
     } else {
       console.log(result, 'inte inloggad >:(')
-      res.redirect('/login')
+      res.redirect('/login.njk')
     }
   });
 })
@@ -119,5 +120,20 @@ router.get('/dbtest', async function (req, res) {
   const [data] = await pool.promise().query('SELECT * FROM alfred_user')
   res.json({ data })
 })
+
+router.get('/newlist', function (req, res) {
+  res.render('newlist.njk', { title: 'Ny lista' })
+})
+
+router.post('/newlist', async function (req, res) {
+  console.log(req.body)
+  // plocka ut värden vi ska ha
+  const listname = req.body.listname
+  const game = req.body.game
+  const composition = req.body.composition
+
+  console.log(listname, game, composition)
+})
+
 
 module.exports = router

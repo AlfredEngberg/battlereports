@@ -1,16 +1,16 @@
 {% extends "layout.njk" %}
 
 {% block content %}
-<h1>Lägg till ny spelare</h1>
+<h1>Registrera ny användare</h1>
 <h2>Namn, Epost och lösenord</h2>
 <form method="post" action="/newuser">
     <label for="username">username</label>
     <input type="text" name="username" id="username" required>
 
-    <label for="armylist">email</label>
+    <label for="email">email</label>
     <input type="text" name="email" id="email" required>
 
-    <label for="armylist">password</label>
+    <label for="password">password</label>
     <input type="text" name="password" id="password" required>
 
     <input type="submit">

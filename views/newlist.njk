@@ -1,0 +1,20 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<h1>Lägg till ny lista</h1>
+<h2>Namn, Epost och lösenord</h2>
+<form method="post" action="/newuser">
+
+    <label for="listname">Listname</label>
+    <input type="text" name="listname" id="listname" required>
+
+    <label for="armylist">Game + Edition</label>
+    <input type="checkbox" name="email" id="email" required>
+
+    <label for="composition">Composition</label>
+    <input type="text" name="composition" id="composition" required>
+
+    <input type="submit">
+</form>
+
+{% endblock %}
