@@ -8,7 +8,7 @@ Planeringen ska vara färdig och skapandet av databasen ska ske.
 Databasen med tabeller.
 
 User har id, namn, password och epost.
-List har id, spel (med edition), pointsValue, composition och user_id.
+List har id, spel, pointsValue, composition och user_id.
 Game har id, list1, list2, winner
 
 # V.17
@@ -21,11 +21,4 @@ Inloggning ska vara färdig
 Göra så att man kan göra egna listor när man är inloggad 
 
 # V.20
-Göra klart listskapandet
-
-# V.21
-CSS och göra fint
-
-# V.22
-CSS och göra finare och sånt ig så den blir färdig 
-:D :D :D :D :D :D :D :D :D :D
+CSS, göra fint och finslip

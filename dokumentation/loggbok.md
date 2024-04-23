@@ -10,3 +10,6 @@ Idag så lade jag in session i projektet och fixade inloggningen. Det var otroli
 
 # 22-04 2024
 Idag så fixade jag så att man kan skapa en ny användare och när man skapar en ny användare så tas man till login sidan. Sen när man är inloggad så ser man en ny knapp som man kan skapa listor på. Jag har skapat ett formulär där som man ska använda för att skapa en ny lista. Det största problemet med detta är att välja vilket spel som man ska använda, först tänkte jag en dropdown meny men det verkade ganska svårt och jag fick inte till det så jag kollade på andra alternativ och kom fram till att checkbox skulle fungera lika bra och vara lättare så det ska bli det. Nästa lektion 
+
+# 23-04 2024
+Idag så lade jag till en log ut knapp, som loggar ut en. Jag gömde login och skapa ny användare knapparna om man är inloggad och så ser man skapa ny lista knappen. Jag fick också till det med checkboxes så nu är folmuläret färdig. Ett problem jag har stött på idag är att det har varit ganska svårt att kunna använda formuläret och få den till databasen och att det har kommit upp massa skumma personer i databasen :/ verkade fixat sig självt med jag litar inte på den. Nästa gång så ska jag fixa formuläret och fixa så att det kommer till databasen.

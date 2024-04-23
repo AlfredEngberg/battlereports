@@ -8,7 +8,7 @@ const { render } = require('nunjucks');
 const session = require('express-session');
 
 router.get('/', function (req, res) {
-  res.render('index.njk', { title: 'Welcome!', loggedin: req.session.loggedin })
+  res.render('index.njk', { title: 'Welcome!', loggedin: req.session.loggedin || false })
 
 })
 
@@ -29,7 +29,7 @@ router.post('/newuser', async function (req, res) {
 
     try {
       const [result] = await pool.promise().query('INSERT INTO alfred_user (username, password) VALUES (?, ?)', [username, hash])
-      return res.redirect('/login')
+      return res.redirect('/')
     } catch (error) {
       console.log(error)
     }
@@ -37,7 +37,7 @@ router.post('/newuser', async function (req, res) {
   })
 })
 
-router.get('/profile/:id', async function (req, res) {
+router.get('/list/:id', async function (req, res) {
   console.log(req.params.id)
 
   const player_id = req.params.id
@@ -82,11 +82,10 @@ router.post('/login', async function (req, res) {
       req.session.username = user[0].username
 
       console.log(req.session.loggedin)
-      res.redirect('/secret')
-      // res.redirect
+      res.redirect('/')
     } else {
       console.log(result, 'inte inloggad >:(')
-      res.redirect('/login.njk')
+      res.redirect('/')
     }
   });
 })
@@ -128,12 +127,32 @@ router.get('/newlist', function (req, res) {
 router.post('/newlist', async function (req, res) {
   console.log(req.body)
   // plocka ut värden vi ska ha
-  const listname = req.body.listname
   const game = req.body.game
+  const listname = req.body.listname
+  const pointsvalue = req.body.pointsvalue
   const composition = req.body.composition
 
   console.log(listname, game, composition)
+  try {
+    const [result] = await pool.promise().query('INSERT INTO alfred_list (game, pointsvalue, composition, listname) VALUES (?, ?, ?, ?)', [username, listname, pointsvalue, composition])
+    return res.redirect('/')
+  } catch (error) {
+    console.log(error)
+  }
+
+
 })
 
+router.get('/logout', function (req, res) {
+
+  console.log(req.session.username)
+
+  if (!req.session.username) {
+    return res.redirect('/')
+  }
+  req.session.loggedin = false
+  console.log("Logged out")
+  res.render('logout.njk')
+})
 
 module.exports = router
