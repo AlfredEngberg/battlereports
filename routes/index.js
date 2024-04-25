@@ -37,30 +37,6 @@ router.post('/newuser', async function (req, res) {
   })
 })
 
-router.get('/list/:id', async function (req, res) {
-  console.log(req.params.id)
-
-  const player_id = req.params.id
-  try {
-    const [playerWithList] = await pool.promise().query(
-      `SELECT alfred_spelare.*, alfred_lists.namn as listnamn, alfred_lists.list as player_list
-      FROM alfred_spelare
-      JOIN alfred_lists
-      ON alfred_spelare.id = alfred_lists.spelare_id
-      WHERE alfred_spelare.id = ?`, [player_id]
-    );
-
-    console.log(playerWithList)
-    return res.render('profile.njk', {
-      title: 'Spelaren:',
-      player: playerWithList[0]
-    })
-  } catch (error) {
-    console.log(error)
-    res.sendStatus(500)
-  }
-})
-
 router.get('/login', function (req, res) {
   res.render('login.njk')
 })
@@ -80,6 +56,7 @@ router.post('/login', async function (req, res) {
       console.log(result, 'inloggad')
       req.session.loggedin = true
       req.session.username = user[0].username
+      req.session.userId = user[0].id
 
       console.log(req.session.loggedin)
       res.redirect('/')
@@ -120,27 +97,36 @@ router.get('/dbtest', async function (req, res) {
   res.json({ data })
 })
 
-router.get('/newlist', function (req, res) {
-  res.render('newlist.njk', { title: 'Ny lista' })
+router.get('/newlist', async function (req, res) {
+
+  if (!req.session.username) {
+    console.log("inte inloggad, stick")
+    return res.redirect('/login')
+  }
+
+  const [gameSystems] = await pool.promise().query('SELECT * FROM alfred_game_system')
+  res.render('newlist.njk', { title: 'Ny lista', gameSystems })
 })
 
 router.post('/newlist', async function (req, res) {
+
   console.log(req.body)
   // plocka ut värden vi ska ha
-  const game = req.body.game
+  const gameId = parseInt(req.body.game)
   const listname = req.body.listname
-  const pointsvalue = req.body.pointsvalue
+  const pointsvalue = parseInt(req.body.pointsvalue)
   const composition = req.body.composition
 
-  console.log(listname, game, composition)
+  console.log(gameId, pointsvalue, composition, listname, req.session.userId)
+
   try {
-    const [result] = await pool.promise().query('INSERT INTO alfred_list (game, pointsvalue, composition, listname) VALUES (?, ?, ?, ?)', [username, listname, pointsvalue, composition])
-    return res.redirect('/')
+    const [result] = await pool.promise().query('INSERT INTO alfred_list (game_system_id, pointsvalue, composition, listname, user_id) VALUES (?, ?, ?, ?, ?);', [gameId, pointsvalue, composition, listname, req.session.userId])
+    res.json(result)
   } catch (error) {
+    console.log('DET BLEV FEL')
     console.log(error)
+    res.json(error)
   }
-
-
 })
 
 router.get('/logout', function (req, res) {

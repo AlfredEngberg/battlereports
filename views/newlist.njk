@@ -3,19 +3,25 @@
 {% block content %}
 <h1>Lägg till ny lista</h1>
 <h2>Namn, Epost och lösenord</h2>
-<form method="post" action="/newuser">
+<form method="post" action="/newlist">
 
     <fieldset>
         <div>
             <h3>Game</h3>
-            <label for="40k">Warhammer 40k</label>
+            <select name="game" id="game">
+                {% for game in gameSystems %}
+                    <!-- <input type="radio" name="game" value="{{ game.id }}"> -->
+                    <option value="{{ game.id }}">{{ game.name }}</option>
+                {% endfor %}
+            </select>
+            <!-- <label for="40k">Warhammer 40k</label>
             <input type="radio" id="contactChoice1" name="game" value="Warhammer 40k" />
 
             <label for="aos">Warhammer AoS</label>
             <input type="radio" id="aos" name="game" value="Warhammer AoS" />
 
             <label for="tow">Warhammer The Old World</label>
-            <input type="radio" id="tow" name="game" value="Warhammer TOW" />
+            <input type="radio" id="tow" name="game" value="Warhammer TOW" /> -->
         </div>
     </fieldset>
 
@@ -25,13 +31,13 @@
     </fieldset>
     
     <fieldset>
-        <label for="pts">Points Value</label>
-        <input type="int" name="pts" id="pts" required>
+        <label for="pointsvalue">Points Value</label>
+        <input type="number" name="pointsvalue" id="pointsvalue" required>
     </fieldset>
 
     <fieldset>
         <label for="composition">Composition</label>
-        <input type="text" name="composition" id="composition" required>
+        <textarea name="composition" id="composition" required></textarea>
     </fieldset>
     <input type="submit">
 </form>

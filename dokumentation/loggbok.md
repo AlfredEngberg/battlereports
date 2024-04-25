@@ -13,3 +13,6 @@ Idag så fixade jag så att man kan skapa en ny användare och när man skapar e
 
 # 23-04 2024
 Idag så lade jag till en log ut knapp, som loggar ut en. Jag gömde login och skapa ny användare knapparna om man är inloggad och så ser man skapa ny lista knappen. Jag fick också till det med checkboxes så nu är folmuläret färdig. Ett problem jag har stött på idag är att det har varit ganska svårt att kunna använda formuläret och få den till databasen och att det har kommit upp massa skumma personer i databasen :/ verkade fixat sig självt med jag litar inte på den. Nästa gång så ska jag fixa formuläret och fixa så att det kommer till databasen.
+
+# 25-04 2024
+Idag så skrev jag färdigt så att man kan skapa nya listor MEN bara om man är inloggad, om man inte är inloggad och vill skapa en lista så skickas man till log in sidan. Jag ändrade så att det är en dropdown meny istället för radio buttons. Nästa gång så ska jag lägga till så att man ska kunna se andras listor och sen gå in på dom för att se mer detalj på listan
