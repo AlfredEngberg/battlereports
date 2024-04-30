@@ -9,7 +9,6 @@ const session = require('express-session');
 
 router.get('/', function (req, res) {
   res.render('index.njk', { title: 'Welcome!', loggedin: req.session.loggedin || false })
-
 })
 
 router.get('/newuser', function (req, res) {
@@ -88,6 +87,10 @@ router.get('/hash', async function (req, res) {
 })
 
 router.get('/users', function (req, res) {
+  res.render('users.njk', { title: 'Welcome' })
+})
+
+router.get('/users:id', function (req, res) {
   res.render('users.njk', { title: 'Welcome' })
 })
 
