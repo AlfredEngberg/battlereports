@@ -16,3 +16,8 @@ Idag så lade jag till en log ut knapp, som loggar ut en. Jag gömde login och s
 
 # 25-04 2024
 Idag så skrev jag färdigt så att man kan skapa nya listor MEN bara om man är inloggad, om man inte är inloggad och vill skapa en lista så skickas man till log in sidan. Jag ändrade så att det är en dropdown meny istället för radio buttons. Nästa gång så ska jag lägga till så att man ska kunna se andras listor och sen gå in på dom för att se mer detalj på listan
+
+## 30-04 2024
+Idag så fixade jag lite med css för att jens sa till mig, jag var tvungen att avika från min planering. Jag fixade också hosting på med hjälp av glitch. Jag fixade också validering av express, iaf på att skapa nya användare så att det bara skickas till databasen om man har valida saker i formuläret. Sen har jag också fixat så att man kan se alla användare på sidan som ska visa alla användare. Nästa steg är att kunna gå in på användare och sen se deras listor och sen gå in på listorna och se dess innehåll.
+
+## 06-05 2024

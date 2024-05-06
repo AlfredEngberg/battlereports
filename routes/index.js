@@ -1,43 +1,51 @@
 const express = require('express')
+const { query, matchedData, validationResult, body } = require('express-validator')
+const app = express()
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const pool = require('../db')
-const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const { render } = require('nunjucks');
-const session = require('express-session');
+const session = require('express-session')
+
 
 router.get('/', function (req, res) {
   res.render('index.njk', { title: 'Welcome!', loggedin: req.session.loggedin || false })
 })
 
 router.get('/newuser', function (req, res) {
-  res.render('newuser.njk', { title: 'Ny användare' })
+  res.render('newuser.njk', { title: 'Ny användare', loggedin: req.session.loggedin || false })
 })
 
-router.post('/newuser', async function (req, res) {
-  console.log(req.body)
-  // plocka ut värden vi ska ha
-  const username = req.body.username
-  const email = req.body.email
-  const password = req.body.password
+router.post('/newuser',
+  body("username").notEmpty().trim().escape(),
+  body("email").notEmpty().isEmail(),
+  body("password").notEmpty(),
+  async function (req, res) {
 
-  console.log(username, email, password)
+    const result = validationResult(req);
 
-  bcrypt.hash(password, 10, async function (err, hash) {
+    console.log(result)
+    if (result.isEmpty()) {
+      const username = req.body.username
+      const email = req.body.email
+      const password = req.body.password
 
-    try {
-      const [result] = await pool.promise().query('INSERT INTO alfred_user (username, password) VALUES (?, ?)', [username, hash])
-      return res.redirect('/')
-    } catch (error) {
-      console.log(error)
+      console.log(username, email, password)
+
+      bcrypt.hash(password, 10, async function (err, hash) {
+        try {
+          const [result] = await pool.promise().query('INSERT INTO alfred_user (username, email, password) VALUES (?, ?, ?)', [username, email, hash])
+          return res.redirect('/login')
+        } catch (error) {
+          console.log(error)
+
+          return res.send({ errors: result.array() });
+        }
+      })
     }
-    res.json(req.body)
   })
-})
 
 router.get('/login', function (req, res) {
-  res.render('login.njk')
+  res.render('login.njk', { loggedin: req.session.loggedin || false })
 })
 
 router.post('/login', async function (req, res) {
@@ -74,7 +82,7 @@ router.get('/secret', function (req, res) {
     console.log("inte inloggad, stick")
     return res.redirect('/login')
   }
-  res.render('secret.njk', { username: req.session.username })
+  res.render('secret.njk', { username: req.session.username, loggedin: req.session.loggedin || false })
 })
 
 router.get('/hash', async function (req, res) {
@@ -86,12 +94,13 @@ router.get('/hash', async function (req, res) {
   });
 })
 
-router.get('/users', function (req, res) {
-  res.render('users.njk', { title: 'Welcome' })
-})
+router.get('/users', async function (req, res) {
 
-router.get('/users:id', function (req, res) {
-  res.render('users.njk', { title: 'Welcome' })
+  const [users] = await pool.promise().query('SELECT * FROM alfred_user')
+
+  console.log(users)
+
+  res.render('users.njk', { title: 'Welcome', users, loggedin: req.session.loggedin || false })
 })
 
 router.get('/dbtest', async function (req, res) {
@@ -108,7 +117,7 @@ router.get('/newlist', async function (req, res) {
   }
 
   const [gameSystems] = await pool.promise().query('SELECT * FROM alfred_game_system')
-  res.render('newlist.njk', { title: 'Ny lista', gameSystems })
+  res.render('newlist.njk', { title: 'Ny lista', gameSystems, loggedin: req.session.loggedin || false })
 })
 
 router.post('/newlist', async function (req, res) {
@@ -119,16 +128,17 @@ router.post('/newlist', async function (req, res) {
   const listname = req.body.listname
   const pointsvalue = parseInt(req.body.pointsvalue)
   const composition = req.body.composition
+  const user_id = req.session.userId
 
-  console.log(gameId, pointsvalue, composition, listname, req.session.userId)
+  console.log(gameId, pointsvalue, composition, listname, user_id)
 
   try {
-    const [result] = await pool.promise().query('INSERT INTO alfred_list (game_system_id, pointsvalue, composition, listname, user_id) VALUES (?, ?, ?, ?, ?);', [gameId, pointsvalue, composition, listname, req.session.userId])
-    res.json(result)
+    const [result] = await pool.promise().query('INSERT INTO alfred_list (game_system_id, pointsvalue, composition, listname, user_id) VALUES (?, ?, ?, ?, ?);', [gameId, pointsvalue, composition, listname, user_id])
+    return res.redirect('/')
   } catch (error) {
     console.log('DET BLEV FEL')
     console.log(error)
-    res.json(error)
+    return res.json(error)
   }
 })
 
@@ -141,7 +151,9 @@ router.get('/logout', function (req, res) {
   }
   req.session.loggedin = false
   console.log("Logged out")
-  res.render('logout.njk')
+  res.render('logout.njk', { title: 'Welcome', loggedin: req.session.loggedin || false })
 })
+
+
 
 module.exports = router

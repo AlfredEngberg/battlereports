@@ -1,7 +1,9 @@
 <nav class="navbar">
-  <a class="brand" href="/">Brand</a>
-  <div class="navbar__collapse">
+  <a class="brand" href="/"> <img src="/img/logga.png" alt="loggotyp" height="120px" width="100px"></a>
+
+  <div class="flex-container">
     <ul class="nav">
+
       <li class="nav-item"><a href="/" class="button">Home</a></li>
 
       <li class="nav-item"><a href="/users" class="button">List of all users</a></li>
@@ -9,14 +11,15 @@
       {% if loggedin == false %}
 
       <li class="nav-item"><a href="/login" class="button">Login</a></li>
+
       <li class="nav-item"><a href="/newuser" class="button">Register new user</a></li>
 
       {% endif %}
 
 
       {% if loggedin == true %}
-
       <li class="nav-item"><a href="/newlist" class="button">Create New List</a></li>
+
       <li class="nav-item"><a href="/logout" class="button">Logout</a></li>
 
       {% endif %}
