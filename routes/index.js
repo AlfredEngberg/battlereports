@@ -96,12 +96,32 @@ router.get('/hash', async function (req, res) {
 
 router.get('/users', async function (req, res) {
 
-  const [users] = await pool.promise().query('SELECT * FROM alfred_user')
+  const [users] = await pool.promise().query('SELECT id, username FROM alfred_user')
 
   console.log(users)
 
   res.render('users.njk', { title: 'Welcome', users, loggedin: req.session.loggedin || false })
 })
+
+router.get('/users/:id', async function (req, res) {
+
+  try {
+    const [UserWithList] = await pool.promise().query(
+      `SELECT alfred_user.username, alfred_list.game_system_id as game, alfred_list.pointsvalue as ptsValue, alfred_list.composition as composition, alfred_list.user_id as userid, alfred_list.listname as listname 
+    FROM alfred_list
+    JOIN alfred_user
+    ON alfred_user.list_id = alfred_user_list.id
+    WHERE alfred_user.id = ?`, [req.params.id]
+    );
+
+    res.send("alltså tom, skärp dig")
+
+  } catch (error) {
+    console.log(error)
+    res.sendStatus(500)
+  }
+})
+
 
 router.get('/dbtest', async function (req, res) {
   const pool = require('../db')
@@ -153,7 +173,5 @@ router.get('/logout', function (req, res) {
   console.log("Logged out")
   res.render('logout.njk', { title: 'Welcome', loggedin: req.session.loggedin || false })
 })
-
-
 
 module.exports = router
