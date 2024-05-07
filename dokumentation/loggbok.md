@@ -22,3 +22,6 @@ Idag så fixade jag lite med css för att jens sa till mig, jag var tvungen att 
 
 ## 06-05 2024
 Idag så försökte jag att fixa man ska kunna gå in på en profil och se hens listor men det gick inte så bra. Jag har kollat på cats-repot men det har inte varit jätte hjälpsamt. Jag har gjort så att man iaf tar sig till en sida beroende på id:t. Det jag måste ha hjälp med är att få sql-frågan att fungera samt att göra sidan med css och annat, för att nu så är det utan css när den "fungerade"
+
+## 07-05 2024
+Idag så har jag fixat det mesta som behövts för att sidan ska fungera. Jag lade till en sida där man kan se alla listor i databasen. Nu kan man även gå in på en profil och se listorna som den användaren har skapat. Man kan sen gå in på listorna och se mer detaljer om listan, namn på listan, skaparen (dock så är det bara ett id för användaren just nu), poängvärde och dess compositon. Ett problem jag stötte på idag är att jag hade fel i package.json filen och den upptäckte inte ändringar i njk-filer, löstes ganska lätt. Ett annat problem som jag har stött på är att SQL frågorna tycker jag är jätte kluriga. Det är svårt att få till dom så att dom faktiskt gör det jag vill. Det som jag ska göra nästa gång är igentligen bara finslip. Göra sidan tydligare för användarna och liknande.

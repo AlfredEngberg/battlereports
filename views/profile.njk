@@ -2,8 +2,13 @@
 
 
 {% block content %}
-  <h1>{{ title }}</h1>
-  <p>Kolla in mina kooola listor :D :D :D</p>
+<h1>{{ list.username }}</h1>
+<h3>Lists:</h3>
 
-  {{player.namn}}
+<ul>
+  {% for list in userWithLists %}
+  <li><a href="/lists/{{list.listId}}" class="button">{{ list.listname }}</a></li>
+  {% endfor %}
+</ul>
+
 {% endblock %}

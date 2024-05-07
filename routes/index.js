@@ -106,19 +106,21 @@ router.get('/users', async function (req, res) {
 router.get('/users/:id', async function (req, res) {
 
   try {
-    const [UserWithList] = await pool.promise().query(
-      `SELECT alfred_user.username, alfred_list.game_system_id as game, alfred_list.pointsvalue as ptsValue, alfred_list.composition as composition, alfred_list.user_id as userid, alfred_list.listname as listname 
-    FROM alfred_list
-    JOIN alfred_user
-    ON alfred_user.list_id = alfred_user_list.id
-    WHERE alfred_user.id = ?`, [req.params.id]
+    const [userWithLists] = await pool.promise().query(
+      `SELECT alfred_user.username, alfred_list.game_system_id as game, alfred_list.pointsvalue as ptsValue, alfred_list.composition as composition, alfred_list.user_id as userid, alfred_list.listname as listname, alfred_list.id as listId
+      FROM alfred_list
+      JOIN alfred_user
+      ON alfred_user.id = alfred_list.user_id
+      WHERE alfred_user.id = ?`, [req.params.id]
     );
 
-    res.send("alltså tom, skärp dig")
+    console.log(userWithLists)
+
+    res.render('profile.njk', { title: 'Welcome', userWithLists, loggedin: req.session.loggedin || false })
 
   } catch (error) {
     console.log(error)
-    res.sendStatus(500)
+    return res.sendStatus(500)
   }
 })
 
@@ -172,6 +174,32 @@ router.get('/logout', function (req, res) {
   req.session.loggedin = false
   console.log("Logged out")
   res.render('logout.njk', { title: 'Welcome', loggedin: req.session.loggedin || false })
+})
+
+router.get('/lists', async function (req, res) {
+
+  const [lists] = await pool.promise().query('SELECT id, listname FROM alfred_list')
+
+  console.log(lists)
+
+  res.render('lists.njk', { title: 'Welcome', lists, loggedin: req.session.loggedin || false })
+})
+
+router.get('/lists/:id', async function (req, res) {
+
+  try {
+    const [list] = await pool.promise().query(
+      `SELECT * FROM alfred_list WHERE id = ?`, [req.params.id]
+    );
+
+    console.log(list)
+
+    res.render('list.njk', { title: 'Welcome', list: list[0], loggedin: req.session.loggedin || false })
+
+  } catch (error) {
+    console.log(error)
+    return res.sendStatus(500)
+  }
 })
 
 module.exports = router

@@ -1,0 +1,13 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<main class="wrapper">
+    <h1>All lists</h1>
+
+    <ul>
+        {% for list in lists %}
+        <li><a href="/lists/{{list.id}}" class="button">{{ list.listname }}</a></li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock %}
