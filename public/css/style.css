@@ -50,6 +50,10 @@ img {
   list-style: none;
 }
 
+ul {
+  list-style: none;
+}
+
 .options {
   list-style: none;
   display: flex;

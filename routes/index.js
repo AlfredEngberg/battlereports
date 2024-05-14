@@ -17,8 +17,8 @@ router.get('/newuser', function (req, res) {
 
 router.post('/newuser',
   body("username").notEmpty().trim().escape(),
-  body("email").notEmpty().isEmail(),
-  body("password").notEmpty(),
+  body("email").notEmpty().isEmail().escape(),
+  body("password").notEmpty().escape(),
   async function (req, res) {
 
     const result = validationResult(req);
@@ -72,7 +72,6 @@ try {  bcrypt.compare(passwordFromForm, user[0].password, function (err, result)
   console.log('inte inloggad >:(')
   res.redirect('/login')
 }
-
 })
 
 router.get('/secret', function (req, res) {
@@ -144,6 +143,11 @@ router.get('/newlist', async function (req, res) {
 })
 
 router.post('/newlist', async function (req, res) {
+  body("gameID").notEmpty().isInt().escape(),
+  body("listname").notEmpty().trim().escape(),
+  body("pointsvalue").isInt().escape(),
+  body("composition").notEmpty().escape(),
+  body("user_id").notEmpty().escape(),
 
   console.log(req.body)
   // plocka ut värden vi ska ha
@@ -155,6 +159,10 @@ router.post('/newlist', async function (req, res) {
 
   console.log(gameId, pointsvalue, composition, listname, user_id)
 
+if (pointsvalue) {
+  
+}
+  
   try {
     const [result] = await pool.promise().query('INSERT INTO alfred_list (game_system_id, pointsvalue, composition, listname, user_id) VALUES (?, ?, ?, ?, ?);', [gameId, pointsvalue, composition, listname, user_id])
     return res.redirect('/')
