@@ -51,7 +51,6 @@ router.get('/login', function (req, res) {
 router.post('/login', async function (req, res) {
   const userFromForm = req.body.username
   const passwordFromForm = req.body.password
-  const emailFromForm = req.body.email
 
   const [user] = await pool.promise().query(
     'SELECT * FROM alfred_user WHERE username = ?', [userFromForm]
@@ -189,7 +188,10 @@ router.get('/lists/:id', async function (req, res) {
 
   try {
     const [list] = await pool.promise().query(
-      `SELECT * FROM alfred_list WHERE id = ?`, [req.params.id]
+      `SELECT alfred_list.*, alfred_user.username FROM alfred_list JOIN alfred_user 
+      ON alfred_user.id = alfred_list.user_id
+      WHERE alfred_list.id = ?`,
+       [req.params.id]
     );
 
     console.log(list)
