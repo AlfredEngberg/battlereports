@@ -56,21 +56,23 @@ router.post('/login', async function (req, res) {
     'SELECT * FROM alfred_user WHERE username = ?', [userFromForm]
   )
   console.log(user)
+try {  bcrypt.compare(passwordFromForm, user[0].password, function (err, result) {
+  if (result == true) {
+    console.log(result, 'inloggad')
+    req.session.loggedin = true
+    req.session.username = user[0].username
+    req.session.userId = user[0].id
 
-  bcrypt.compare(passwordFromForm, user[0].password, function (err, result) {
-    if (result == true) {
-      console.log(result, 'inloggad')
-      req.session.loggedin = true
-      req.session.username = user[0].username
-      req.session.userId = user[0].id
+    console.log(req.session.loggedin)
+    res.redirect('/')
+  }
+})
 
-      console.log(req.session.loggedin)
-      res.redirect('/')
-    } else {
-      console.log(result, 'inte inloggad >:(')
-      res.redirect('/')
-    }
-  });
+} catch (error) {
+  console.log('inte inloggad >:(')
+  res.redirect('/login')
+}
+
 })
 
 router.get('/secret', function (req, res) {
