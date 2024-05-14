@@ -39,10 +39,12 @@ img {
   flex-direction: row;
   justify-content: space-between;
 }
+
 .nav {
   display: flex;
   gap: 1rem;
 }
+
 .nav-item {
   display: flex;
   list-style: none;
