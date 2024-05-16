@@ -57,6 +57,9 @@ router.post('/login', async function (req, res) {
   )
   console.log(user)
 try {  bcrypt.compare(passwordFromForm, user[0].password, function (err, result) {
+body("username").notEmpty(),
+body("password").notEmpty()
+
   if (result == true) {
     console.log(result, 'inloggad')
     req.session.loggedin = true
@@ -143,26 +146,31 @@ router.get('/newlist', async function (req, res) {
 })
 
 router.post('/newlist', async function (req, res) {
-  body("gameID").notEmpty().isInt().escape(),
-  body("listname").notEmpty().trim().escape(),
+  body("gameID").notEmpty().isInt().escape().isInt(),
+  body("listname").notEmpty().trim().escape().isString(),
   body("pointsvalue").isInt().escape(),
   body("composition").notEmpty().escape(),
-  body("user_id").notEmpty().escape(),
-
+  body("user_id").notEmpty().escape().isInt(),
   console.log(req.body)
   // plocka ut värden vi ska ha
+  
   const gameId = parseInt(req.body.game)
   const listname = req.body.listname
   const pointsvalue = parseInt(req.body.pointsvalue)
   const composition = req.body.composition
   const user_id = req.session.userId
 
+  const result = validationResult(req);
+  if (result.isEmpty()) {
+    const data = matchedData(req);
+    return res.send(`Hello, ${data.person}!`);
+  } 
+
   console.log(gameId, pointsvalue, composition, listname, user_id)
 
 if (pointsvalue) {
   
 }
-  
   try {
     const [result] = await pool.promise().query('INSERT INTO alfred_list (game_system_id, pointsvalue, composition, listname, user_id) VALUES (?, ?, ?, ?, ?);', [gameId, pointsvalue, composition, listname, user_id])
     return res.redirect('/')

@@ -28,3 +28,6 @@ Idag så har jag fixat det mesta som behövts för att sidan ska fungera. Jag la
 
 ## 14-15 2024
 Idag så har jag fixat massa små fel, finslipat och börjat med express validator på alla formulär. SQL-frågan var ett problem men det löstes. Jag gjorde lösenordet till lösenord, jag gjorde det snyggare med att ta bort prickarna bredvid. Nästa gång så ska jag fortsätta med express validator och se till att det fungerar och sen när det är klart så ska jag få upp sidan på glitch.
+
+## 16-05 2024
+Idag har jag jobbat med express-validering och det är klurit som satan. Det är väldigt konstigt hur saker fungerar men det fungerar på något sätt men jag förstår inte hur. Jag har validering på alla formulär. Nästa gång ska jag fortsätta med express, mer specifikt att hantara dom eventuella felen som kan uppstå.
