@@ -56,25 +56,26 @@ router.post('/login', async function (req, res) {
     'SELECT * FROM alfred_user WHERE username = ?', [userFromForm]
   )
   console.log(user)
-try {  bcrypt.compare(passwordFromForm, user[0].password, function (err, result) {
-body("username").notEmpty(),
-body("password").notEmpty()
+  try {
+    bcrypt.compare(passwordFromForm, user[0].password, function (err, result) {
+      body("username").notEmpty(),
+        body("password").notEmpty()
 
-  if (result == true) {
-    console.log(result, 'inloggad')
-    req.session.loggedin = true
-    req.session.username = user[0].username
-    req.session.userId = user[0].id
+      if (result == true) {
+        console.log(result, 'inloggad')
+        req.session.loggedin = true
+        req.session.username = user[0].username
+        req.session.userId = user[0].id
 
-    console.log(req.session.loggedin)
-    res.redirect('/')
+        console.log(req.session.loggedin)
+        res.redirect('/')
+      }
+    })
+
+  } catch (error) {
+    console.log('inte inloggad >:(')
+    res.redirect('/login')
   }
-})
-
-} catch (error) {
-  console.log('inte inloggad >:(')
-  res.redirect('/login')
-}
 })
 
 router.get('/secret', function (req, res) {
@@ -127,7 +128,6 @@ router.get('/users/:id', async function (req, res) {
   }
 })
 
-
 router.get('/dbtest', async function (req, res) {
   const pool = require('../db')
   const [data] = await pool.promise().query('SELECT * FROM alfred_user')
@@ -147,13 +147,13 @@ router.get('/newlist', async function (req, res) {
 
 router.post('/newlist', async function (req, res) {
   body("gameID").notEmpty().isInt().escape().isInt(),
-  body("listname").notEmpty().trim().escape().isString(),
-  body("pointsvalue").isInt().escape(),
-  body("composition").notEmpty().escape(),
-  body("user_id").notEmpty().escape().isInt(),
-  console.log(req.body)
+    body("listname").notEmpty().trim().escape().isString(),
+    body("pointsvalue").isInt().escape(),
+    body("composition").notEmpty().escape(),
+    body("user_id").notEmpty().escape().isInt(),
+    console.log(req.body)
   // plocka ut värden vi ska ha
-  
+
   const gameId = parseInt(req.body.game)
   const listname = req.body.listname
   const pointsvalue = parseInt(req.body.pointsvalue)
@@ -164,13 +164,13 @@ router.post('/newlist', async function (req, res) {
   if (result.isEmpty()) {
     const data = matchedData(req);
     return res.send(`Hello, ${data.person}!`);
-  } 
+  }
 
   console.log(gameId, pointsvalue, composition, listname, user_id)
 
-if (pointsvalue) {
-  
-}
+  if (pointsvalue) {
+
+  }
   try {
     const [result] = await pool.promise().query('INSERT INTO alfred_list (game_system_id, pointsvalue, composition, listname, user_id) VALUES (?, ?, ?, ?, ?);', [gameId, pointsvalue, composition, listname, user_id])
     return res.redirect('/')
@@ -209,7 +209,7 @@ router.get('/lists/:id', async function (req, res) {
       `SELECT alfred_list.*, alfred_user.username FROM alfred_list JOIN alfred_user 
       ON alfred_user.id = alfred_list.user_id
       WHERE alfred_list.id = ?`,
-       [req.params.id]
+      [req.params.id]
     );
 
     console.log(list)

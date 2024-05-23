@@ -31,3 +31,6 @@ Idag så har jag fixat massa små fel, finslipat och börjat med express validat
 
 ## 16-05 2024
 Idag har jag jobbat med express-validering och det är klurit som satan. Det är väldigt konstigt hur saker fungerar men det fungerar på något sätt men jag förstår inte hur. Jag har validering på alla formulär. Nästa gång ska jag fortsätta med express, mer specifikt att hantara dom eventuella felen som kan uppstå.
+
+## 21-05 2024
+Idag har jag försökt få upp den på glitch men det gick åt helvete och jag är typ inte ett dugg närmare för att få hosting att fungera
