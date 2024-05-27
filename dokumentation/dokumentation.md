@@ -18,7 +18,7 @@ Efter det fixade jag massa småfel på sidan och började att lägga till valide
 Sist av allt hostade jag sidan. Jag hade ett problem med att jag inte hade ett anändarnamn i .env filen på glitch.
 
 ## Features jag saknar
-Det finns vissa saker som jag skulle vela lägga till. Några av de saker jag mest vill lägga till är att när man är inloggad att man ska kunna redigera och ta bort existerande listor. Sen att man ska kunna sortera och filtrera listor efter namn, tid skapad, spelsystem och poängvärde.
+Det finns vissa saker som jag skulle vela lägga till. Några av de saker jag mest vill lägga till är att när man är inloggad att man ska kunna redigera och ta bort existerande listor som en användare äger. Sen att man ska kunna sortera och filtrera listor efter namn, tid skapad, spelsystem och poängvärde.
 
 ## Vad skulle jag ändra/göra annorlunda om jag gjorde detta igen?
 Det finns inte jätte mycket jag skulle ändra om jag skulle göra sidan på nytt, jag är ganska nöjd med min sida. Det jag skulle ända är det jag sa i de features jag saknade.

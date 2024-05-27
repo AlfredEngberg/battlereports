@@ -37,3 +37,6 @@ Idag har jag försökt få upp den på glitch men det gick åt helvete och jag �
 
 # 23-05 2024
 Jag fixade hosting och problmet visade sig att jag inte hade ett användarnamn i .env filen som är jätte skumt för det fungerade tidigare när jag testade att hosta sidan. Det problemet jag har nu är blider på sidan inte visas och att det inte vill ladda ner github repot med alla saker som ska finnas.
+
+# 27-05 2024
+Idag har varit en bra dag, jag har fixat validering så det fungerar ordentligt och mycket säkrare. Jag listade även ut hur man använder sig av assets mappen i glitch som underlättar för att det var ett helvete att få in bilder i img mappen, men nu behöver jag inte använda den. Jag validerade allt i validator.nu och alla fel som den sa har jag nu fixat, det var inga större fel. Det största felet jag hade var en title som var tom.
