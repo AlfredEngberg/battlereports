@@ -154,30 +154,30 @@ router.post('/newlist', async function (req, res) {
     console.log(req.body)
   // plocka ut värden vi ska ha
 
-  const gameId = parseInt(req.body.game)
-  const listname = req.body.listname
-  const pointsvalue = parseInt(req.body.pointsvalue)
-  const composition = req.body.composition
-  const user_id = req.session.userId
-
   const result = validationResult(req);
   if (result.isEmpty()) {
+    const gameId = parseInt(req.body.game)
+    const listname = req.body.listname
+    const pointsvalue = parseInt(req.body.pointsvalue)
+    const composition = req.body.composition
+    const user_id = req.session.userId
+
+    console.log(gameId, pointsvalue, composition, listname, user_id)
+
+    try {
+      const [result] = await pool.promise().query('INSERT INTO alfred_list (game_system_id, pointsvalue, composition, listname, user_id) VALUES (?, ?, ?, ?, ?);', [gameId, pointsvalue, composition, listname, user_id])
+      console.log(result)
+      return res.redirect('/')
+    } catch (error) {
+      console.log('DET BLEV FEL')
+      console.log(error)
+      return res.json(error)
+    }
+  } else {
+
     const data = matchedData(req);
-    return res.send(`Hello, ${data.person}!`);
-  }
-
-  console.log(gameId, pointsvalue, composition, listname, user_id)
-
-  if (pointsvalue) {
-
-  }
-  try {
-    const [result] = await pool.promise().query('INSERT INTO alfred_list (game_system_id, pointsvalue, composition, listname, user_id) VALUES (?, ?, ?, ?, ?);', [gameId, pointsvalue, composition, listname, user_id])
+    console.log("fel på resultatet")
     return res.redirect('/')
-  } catch (error) {
-    console.log('DET BLEV FEL')
-    console.log(error)
-    return res.json(error)
   }
 })
 
