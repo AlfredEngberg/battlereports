@@ -5,9 +5,19 @@ body {
   background-color: #272727;
 }
 
+/* unvisited link */
+a:link {
+  color: pink;
+}
+
+/* visited link */
+a:visited {
+  color: pink;
+}
+
 img {
   max-width: 100%;
-  max-height: 175px;
+  max-height: 120px;
   height: auto;
 }
 

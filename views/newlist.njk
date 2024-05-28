@@ -10,18 +10,10 @@
             <h3>Game</h3>
             <select name="game" id="game">
                 {% for game in gameSystems %}
-                    <!-- <input type="radio" name="game" value="{{ game.id }}"> -->
                     <option value="{{ game.id }}">{{ game.name }}</option>
                 {% endfor %}
             </select>
-            <!-- <label for="40k">Warhammer 40k</label>
-            <input type="radio" id="contactChoice1" name="game" value="Warhammer 40k" />
 
-            <label for="aos">Warhammer AoS</label>
-            <input type="radio" id="aos" name="game" value="Warhammer AoS" />
-
-            <label for="tow">Warhammer The Old World</label>
-            <input type="radio" id="tow" name="game" value="Warhammer TOW" /> -->
         </div>
     </fieldset>
 
