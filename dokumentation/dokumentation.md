@@ -20,6 +20,8 @@ Sist av allt hostade jag sidan. Jag hade ett problem med att jag inte hade ett a
 ### Tester
 Jag har testat sidan i Validator.nu och med wave. Det jag fick först var ett kontrastfel på länken till användaren när man är inne i en lista, gjorde alla länkar rosa så fixade jag det. Inga större fel med validator.nu, tror att de största var att jag hade ett p element i pre element som tydligen inte var tillåtet, men det är fixat inga problem. Nu säger wave bara att jag har 1 redundant link men jag har inte tid att fixa det inom rimlig tid så det får vara så, om jag skulle fixa det skulle jag enbart lägga in knappen och bilden (de 2 saker som har samma länk) i ett li element för att fixa det som jag gjorde i ettan med CV-sidan vi gjorde.
 
+Jag har skickat sidan till Nova och Emrik för testande min sida. Det fungerarde bra, inga problem alls. Jag testade även min sida på mobilen och även där så var det inga problem.
+
 ### Bild
 Jag har en AI-genererad logotyp som bild på sidan. Den hade en vit bakgrund först. För att ta bort den använde jag mig av photoshop. Den är 41,6 kB från att vara runt 600. Jag körde den igenom många bild kompressor program för att få den mindre. Nästan inget kunde få någon märkvärdig effekt efter 270 kB. Men sen hittade jag det fantastiska verktyget Pi 7 Image Tool (https://image.pi7.org/compress-image-to-50kb). Det fungerade faktiskt väldigt bra och nu är bilden 41,6 kB från att vara lite mer än 600 kB.
 
