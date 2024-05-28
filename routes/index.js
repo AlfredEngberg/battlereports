@@ -146,12 +146,6 @@ router.get('/newlist', async function (req, res) {
 })
 
 router.post('/newlist', async function (req, res) {
-  body("gameID").notEmpty().isInt().escape().isInt(),
-    body("listname").notEmpty().trim().escape().isString(),
-    body("pointsvalue").isInt().escape(),
-    body("composition").notEmpty().escape(),
-    body("user_id").notEmpty().escape().isInt(),
-    console.log(req.body)
   // plocka ut värden vi ska ha
 
   const result = validationResult(req);
@@ -162,7 +156,12 @@ router.post('/newlist', async function (req, res) {
     const composition = req.body.composition
     const user_id = req.session.userId
 
-    console.log(gameId, pointsvalue, composition, listname, user_id)
+    body("gameID").notEmpty().isInt().escape().isInt(),
+      body("listname").notEmpty().trim().escape().isString(),
+      body("pointsvalue").isInt().escape(),
+      body("composition").notEmpty().escape(),
+      body("user_id").notEmpty().escape().isInt(),
+      console.log(gameId, pointsvalue, composition, listname, user_id)
 
     try {
       const [result] = await pool.promise().query('INSERT INTO alfred_list (game_system_id, pointsvalue, composition, listname, user_id) VALUES (?, ?, ?, ?, ?);', [gameId, pointsvalue, composition, listname, user_id])
@@ -174,7 +173,6 @@ router.post('/newlist', async function (req, res) {
       return res.json(error)
     }
   } else {
-
     const data = matchedData(req);
     console.log("fel på resultatet")
     return res.redirect('/')
